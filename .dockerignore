@@ -1,0 +1,13 @@
+.git
+.github
+.env
+.env.*
+!.env.example
+server
+storage
+*.log
+Dockerfile
+compose.yaml
+README.md
+ecosystem.config.js
+Caddyfile

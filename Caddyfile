@@ -1,0 +1,31 @@
+:8081 {
+	# Reverse proxy API requests to Go backend
+	handle /api/* {
+		reverse_proxy localhost:8080
+	}
+	handle /health {
+		reverse_proxy localhost:8080
+	}
+
+	# Serve Thumbnails
+	handle_path /thumb/* {
+		root * ./storage/thumb
+		file_server
+		header Cache-Control "public, max-age=31536000, immutable"
+	}
+
+	# Serve Product Images (600x600)
+	handle_path /img/* {
+		root * ./storage/600
+		file_server
+		header Cache-Control "public, max-age=31536000, immutable"
+	}
+
+	# Security & Compression
+	encode gzip zstd
+	
+	# Optional: Access logs
+	log {
+		output file ./access.log
+	}
+}
